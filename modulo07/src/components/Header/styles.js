@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+
 export const Container = styled.header`
 	display: flex;
 	justify-content: space-between;
@@ -20,11 +21,11 @@ export const Cart = styled(Link)`
 		margin-right: 10px;
 		strong {
 			display: block;
-			color: #FFF;
+			color: #fff;
 		}
 		span {
 			font-size: 12px;
 			color: #999;
 		}
 	}
-`
+`;

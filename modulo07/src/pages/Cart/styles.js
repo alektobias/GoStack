@@ -23,7 +23,6 @@ export const Container = styled.div`
 			&:hover {
 				background: ${darken(0.05, '#7159c1')};
 			}
-
 		}
 	}
 `;
@@ -68,7 +67,7 @@ export const ProductTable = styled.table`
 		border: 0;
 		padding: 6px;
 	}
-`
+`;
 export const Total = styled.div`
 	display: flex;
 	align-items: baseline;
@@ -80,5 +79,4 @@ export const Total = styled.div`
 		font-size: 28px;
 		margin-left: 5px;
 	}
-
 `;

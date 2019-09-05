@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {darken} from 'polished';
+import { darken } from 'polished';
 
 export const ProductList = styled.ul`
 	list-style: none;
@@ -39,13 +39,13 @@ export const ProductList = styled.ul`
 			align-items: center;
 			transition: background 0.2s;
 			&:hover {
-				background: ${darken(0.05, '#7159c1')}
+				background: ${darken(0.05, '#7159c1')};
 			}
 			div {
 				display: flex;
 				align-items: center;
 				padding: 12px;
-				background: rgba(0,0,0,0.1);
+				background: rgba(0, 0, 0, 0.1);
 				svg {
 					margin-right: 5px;
 				}

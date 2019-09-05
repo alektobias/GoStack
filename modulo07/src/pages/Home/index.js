@@ -1,95 +1,58 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { ProductList } from './styles';
+import api from '../../services/api';
+import { formatPrice } from '../../util/format';
+import * as CartActions from '../../store/modules/cart/action';
+class Home extends Component {
+	state = {
+		products: []
+	};
+	handleAddProduct = (id) => {
+		const { addToCartRequest } = this.props;
+		addToCartRequest(id);
+	};
+	async componentDidMount() {
+		const response = await api.get('products');
+		const data = response.data.map((product) => ({
+			...product,
+			priceFormatted: formatPrice(product.price)
+		}));
+		this.setState({ products: data });
+	}
+	render() {
+		const { products } = this.state;
+		const { amount } = this.props;
+		console.log(amount);
 
-export default function Home() {
-	return (
-		<ProductList>
-			<li>
-				<img src="https://static.netshoes.com.br/produtos/tenis-nike-revolution-4-masculino/26/D12-9119-026/D12-9119-026_zoom1.jpg" alt="Tênis" />
-				<strong>Tênis top</strong>
-				<span>R$129,90</span>
+		return (
+			<ProductList>
+				{products.map((product) => (
+					<li key={product.id}>
+						<img src={product.image} alt={product.title} />
+						<strong>{product.title}</strong>
+						<span>{product.priceFormatted}</span>
 
-				<button type="button">
-					<div>
-						<MdAddShoppingCart size={16} color="#fff" /> 3
-					</div>
-					<span>Adicionar ao carrinho</span>
-				</button>
-			</li>
-			<li>
-				<img src="https://static.netshoes.com.br/produtos/tenis-nike-revolution-4-masculino/26/D12-9119-026/D12-9119-026_zoom1.jpg" alt="Tênis" />
-				<strong>Tênis top</strong>
-				<span>R$129,90</span>
-
-				<button type="button">
-					<div>
-						<MdAddShoppingCart size={16} color="#fff" /> 3
-					</div>
-					<span>Adicionar ao carrinho</span>
-				</button>
-			</li>
-			<li>
-				<img src="https://static.netshoes.com.br/produtos/tenis-nike-revolution-4-masculino/26/D12-9119-026/D12-9119-026_zoom1.jpg" alt="Tênis" />
-				<strong>Tênis top</strong>
-				<span>R$129,90</span>
-
-				<button type="button">
-					<div>
-						<MdAddShoppingCart size={16} color="#fff" /> 3
-					</div>
-					<span>Adicionar ao carrinho</span>
-				</button>
-			</li>
-			<li>
-				<img src="https://static.netshoes.com.br/produtos/tenis-nike-revolution-4-masculino/26/D12-9119-026/D12-9119-026_zoom1.jpg" alt="Tênis" />
-				<strong>Tênis top</strong>
-				<span>R$129,90</span>
-
-				<button type="button">
-					<div>
-						<MdAddShoppingCart size={16} color="#fff" /> 3
-					</div>
-					<span>Adicionar ao carrinho</span>
-				</button>
-			</li>
-			<li>
-				<img src="https://static.netshoes.com.br/produtos/tenis-nike-revolution-4-masculino/26/D12-9119-026/D12-9119-026_zoom1.jpg" alt="Tênis" />
-				<strong>Tênis top</strong>
-				<span>R$129,90</span>
-
-				<button type="button">
-					<div>
-						<MdAddShoppingCart size={16} color="#fff" /> 3
-					</div>
-					<span>Adicionar ao carrinho</span>
-				</button>
-			</li>
-			<li>
-				<img src="https://static.netshoes.com.br/produtos/tenis-nike-revolution-4-masculino/26/D12-9119-026/D12-9119-026_zoom1.jpg" alt="Tênis" />
-				<strong>Tênis top</strong>
-				<span>R$129,90</span>
-
-				<button type="button">
-					<div>
-						<MdAddShoppingCart size={16} color="#fff" /> 3
-					</div>
-					<span>Adicionar ao carrinho</span>
-				</button>
-			</li>
-			<li>
-				<img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSohS2HCP5gL-WEnjb5QSns070IBNNOa4NUGymUT8p0qIFNGAYatY3Xh9QVYbPV7g&usqp=CAc" alt="Tênis" />
-				<strong>Tênis top</strong>
-				<span>R$129,90</span>
-
-				<button type="button">
-					<div>
-						<MdAddShoppingCart size={16} color="#fff" /> 3
-					</div>
-					<span>Adicionar ao carrinho</span>
-				</button>
-			</li>
-		</ProductList>
-	);
+						<button type="button" onClick={() => this.handleAddProduct(product.id)}>
+							<div>
+								<MdAddShoppingCart size={16} color="#fff" /> {amount[product.id] || 0}
+							</div>
+							<span>Adicionar ao carrinho</span>
+						</button>
+					</li>
+				))}
+			</ProductList>
+		);
+	}
 }
+const mapStateToProps = (state) => ({
+	amount: state.cart.reduce((amount, product) => {
+		amount[product.id] = product.amount;
+		return amount;
+	}, {})
+});
+const mapDispatchToProps = (dispatch) => bindActionCreators(CartActions, dispatch);
 
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
