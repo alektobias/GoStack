@@ -27,7 +27,7 @@ routes.post('/files', upload.single('file'), FileController.store);
 routes.route('/providers').post(ProviderController.index);
 routes.route('/providers/:providerId/available').get(AvailableController.index);
 
-routes.route('/schedule').get(ScheduleController.index);
+routes.route('/schedule').get(authMiddleware, ScheduleController.index);
 
 routes
 	.route('/appointments')
