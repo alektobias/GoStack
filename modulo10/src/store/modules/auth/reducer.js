@@ -1,8 +1,9 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-  token: null,
-  signed: false,
+  token:
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNTcxODUxNTg1LCJleHAiOjE1NzI0NTYzODV9.q6hqhEhlvHU7AW6xJHtbynxXJ5WQWcV5VTRNJb22uDU',
+  signed: true,
   loading: false,
 };
 

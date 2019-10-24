@@ -56,6 +56,7 @@ routes
 routes
 	.route('/appointments/:id')
 	.delete(authMiddleware, AppointmentController.delete);
+	
 routes
 	.route('/notifications')
 	.get(authMiddleware, NotificationController.index);

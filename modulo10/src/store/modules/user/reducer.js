@@ -1,7 +1,13 @@
 import produce from 'immer';
 
 const INITIAL_STATE = {
-  profile: null,
+  profile: {
+    id: 2,
+    name: 'Alek Tobia',
+    email: 'alektobias1@gmail.com',
+    provider: false,
+    avatar: null,
+  },
 };
 
 export default function user(state = INITIAL_STATE, action) {

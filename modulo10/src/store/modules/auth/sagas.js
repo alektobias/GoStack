@@ -6,10 +6,12 @@ import { signInSuccess, signFailure } from './actions';
 export function* signIn({ payload }) {
   try {
     const { email, password } = payload;
+    console.log(1)
     const response = yield call(api.post, 'sessions', {
       email,
       password,
     });
+    Alert.alert(email, password);
     const { user, token } = response.data;
 
     if (user.provider) {
@@ -34,12 +36,12 @@ export function* signIn({ payload }) {
 export function* signUp({ payload }) {
   try {
     const { name, email, password } = payload;
+
     yield call(api.post, 'users', {
       name,
       email,
       password,
     });
-    // history.push('/');
   } catch (err) {
     Alert.alert(
       'Falha de cadastro',
@@ -57,12 +59,9 @@ export function setToken({ payload }) {
     api.defaults.headers.Authorization = `Bearer ${token}`;
   }
 }
-export function signOut() {
-  // history.push('/');
-}
+
 export default all([
   takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
-  takeLatest('@auth/SIG_UP_REQUEST', signUp),
-  takeLatest('@auth/SIGN_OUT', signOut),
+  takeLatest('@auth/SIGN_UP_REQUEST', signUp),
 ]);

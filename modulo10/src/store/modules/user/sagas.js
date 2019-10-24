@@ -22,7 +22,6 @@ export function* updateProfile({ payload }) {
       'Falha na atualização',
       'Houve um erro na atualização do perfil, verifique seus dados.'
     );
-    toast.error('Erro ao atualizar perfil, confira seus dados!');
     yield put(updateProfileFailure());
   }
 }
